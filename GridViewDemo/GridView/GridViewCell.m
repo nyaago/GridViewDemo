@@ -18,26 +18,34 @@ const NSString *kGridViewCellKind = @"GridViewCell";
     [self.contentView addSubview:self.contentLabel];
     self.autoresizesSubviews = YES;
   }
-  
   return self;
 }
 
+/*!
+ subviewsのレイアウトが必要なときの通知（リサイズ時など）
+ subviewであるLabelのサイズ、フォントサイズを調整する。
+ */
 - (void)layoutSubviews {
   [super layoutSubviews];
-  NSLog(@"GridViewCell layoutSubviews");
+//  NSLog(@"GridViewCell layoutSubviews");
+  CGRect frame = self.frame;
+  frame.origin.x = 0;
+  frame.origin.y = 0;
+  _contentLabel.frame = frame;
+  _contentLabel.font = [UIFont systemFontOfSize:frame.size.height * 0.8f];
 }
 
-
-+ (NSString *)kind {
-  return (NSString *)kGridViewCellKind;
-}
+#pragma mark Properties
 
 - (UILabel *) contentLabel {
   if(_contentLabel == nil) {
     CGRect frame = self.frame;
     frame.origin.x = 0;
     frame.origin.y = 0;
-    _contentLabel = [[UILabel alloc] initWithFrame:frame];
+    _contentLabel = [[GridCellLabel alloc] initWithFrame:frame];
+    _contentLabel.font = [UIFont systemFontOfSize:20];
+    _contentLabel.adjustsFontSizeToFitWidth = YES;
+    _contentLabel.textAlignment = NSTextAlignmentRight;
   }
   return _contentLabel;
 }
@@ -48,6 +56,28 @@ const NSString *kGridViewCellKind = @"GridViewCell";
 
 - (NSString *)text {
   return self.contentLabel.text;
+}
+
+- (CGFloat) leftPadding {
+  return self.contentLabel.leftPadding;
+}
+
+- (void) setLeftPadding:(CGFloat)leftPadding {
+  self.contentLabel.leftPadding = leftPadding;
+}
+
+- (CGFloat) rightPadding {
+  return self.contentLabel.rightPadding;
+}
+
+- (void) setRightPadding:(CGFloat)rightPadding {
+  self.contentLabel.rightPadding = rightPadding;
+}
+
+#pragma mark class Methods
+
++ (NSString *)kind {
+  return (NSString *)kGridViewCellKind;
 }
 
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		720D8D2217FDC67800D2D8B3 /* GridCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 720D8D2117FDC67800D2D8B3 /* GridCellLabel.m */; };
 		722E091117FBFD79004AC9FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 722E091017FBFD79004AC9FD /* UIKit.framework */; };
 		722E091317FBFD79004AC9FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 722E091217FBFD79004AC9FD /* Foundation.framework */; };
 		722E091517FBFD79004AC9FD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 722E091417FBFD79004AC9FD /* CoreGraphics.framework */; };
@@ -43,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		720D8D2017FDC67800D2D8B3 /* GridCellLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridCellLabel.h; path = GridView/GridCellLabel.h; sourceTree = "<group>"; };
+		720D8D2117FDC67800D2D8B3 /* GridCellLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridCellLabel.m; path = GridView/GridCellLabel.m; sourceTree = "<group>"; };
 		722E090D17FBFD79004AC9FD /* GridViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GridViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		722E091017FBFD79004AC9FD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		722E091217FBFD79004AC9FD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -199,6 +202,8 @@
 				724A888317FD31DC009D0FA4 /* GridViewDelegate.m */,
 				724A888817FD5C36009D0FA4 /* GridView.h */,
 				724A888917FD5C36009D0FA4 /* GridView.m */,
+				720D8D2017FDC67800D2D8B3 /* GridCellLabel.h */,
+				720D8D2117FDC67800D2D8B3 /* GridCellLabel.m */,
 			);
 			name = GridView;
 			sourceTree = "<group>";
@@ -319,6 +324,7 @@
 				722E094E17FC02EE004AC9FD /* GridLayout.m in Sources */,
 				722E095117FC13CD004AC9FD /* GridViewCell.m in Sources */,
 				724A887E17FCF831009D0FA4 /* GridViewLayoutAttribute.m in Sources */,
+				720D8D2217FDC67800D2D8B3 /* GridCellLabel.m in Sources */,
 				724A888117FCFCD4009D0FA4 /* GridViewDataSource.m in Sources */,
 				724A888417FD31DC009D0FA4 /* GridViewDelegate.m in Sources */,
 				724A888717FD336B009D0FA4 /* GridDemoDataSource.m in Sources */,

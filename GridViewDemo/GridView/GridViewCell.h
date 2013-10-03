@@ -7,12 +7,31 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GridCellLabel.h"
 
 @interface GridViewCell : UICollectionViewCell
 
+/*!
+ CellのReuseのためのキャッシュに使う識別値
+ */
 + (NSString *)kind;
 
-@property (nonatomic, strong) UILabel *contentLabel;
+/*!
+ Cell内に配置するlabel view
+ */
+@property (nonatomic, strong) GridCellLabel *contentLabel;
+/*!
+ 表示テキスト
+ */
 @property (nonatomic, strong) NSString *text;
+
+/*!
+ 右側のPadding
+ */
+@property (nonatomic, assign) CGFloat rightPadding;
+/*!
+ 左側のPadding
+ */
+@property (nonatomic, assign) CGFloat leftPadding;
 
 @end
