@@ -1,0 +1,71 @@
+//
+//  GridViewDataSource.m
+//  GridViewDemo
+//
+//  Created by nyaago on 2013/10/03.
+//  Copyright (c) 2013年 nyaago. All rights reserved.
+//
+
+#import "GridViewDataSource.h"
+#import "GridViewCell.h"
+
+@implementation GridViewDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+  
+  if(self.source == nil) {
+    return 0;
+  }
+  return self.source.rowCount * self.source.columnCount;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+  
+  return 1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  
+  // セルは常に再利用される。
+  // 再利用キューにセルが1つもない場合、新規に作成されたセルが返される。
+  // Reuse identifierを登録する必要がある
+  GridViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"GridViewCell"
+                                                                 forIndexPath:indexPath];
+  NSInteger index = [indexPath indexAtPosition:1];
+  NSInteger row = [self rowByIndex:index];
+  NSInteger column = [self columnByIndex:index];
+  if(row >= 0 && column >= 0) {
+    NSString *value = [self.source valueAtRow:row atColumn:column];
+    cell.text = value == nil ? @"" : value;
+  }
+  return cell;
+}
+
+#pragma mark - Private
+
+/*!
+ Index番号から行番号
+ */
+- (NSInteger) rowByIndex:(NSInteger)index {
+  
+  NSInteger row =  floor(index / [self.source columnCount]);
+  if(row > [self.source rowCount ]) {
+    return -1;
+  }
+  return row;
+}
+
+/*!
+ Index番号から列番号
+ */
+- (NSInteger) columnByIndex:(NSInteger)index {
+  NSInteger column = index % [self.source columnCount];
+  return column;
+}
+
+
+#pragma mark -
+
+@end

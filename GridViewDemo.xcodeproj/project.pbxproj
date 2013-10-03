@@ -23,6 +23,12 @@
 		722E093717FBFD79004AC9FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 722E091217FBFD79004AC9FD /* Foundation.framework */; };
 		722E093F17FBFD79004AC9FD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 722E093D17FBFD79004AC9FD /* InfoPlist.strings */; };
 		722E094217FBFD79004AC9FD /* GridViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 722E094117FBFD79004AC9FD /* GridViewDemoTests.m */; };
+		722E094E17FC02EE004AC9FD /* GridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 722E094D17FC02EE004AC9FD /* GridLayout.m */; };
+		722E095117FC13CD004AC9FD /* GridViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 722E095017FC13CD004AC9FD /* GridViewCell.m */; };
+		724A887E17FCF831009D0FA4 /* GridViewLayoutAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 724A887D17FCF831009D0FA4 /* GridViewLayoutAttribute.m */; };
+		724A888117FCFCD4009D0FA4 /* GridViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 724A888017FCFCD4009D0FA4 /* GridViewDataSource.m */; };
+		724A888417FD31DC009D0FA4 /* GridViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 724A888317FD31DC009D0FA4 /* GridViewDelegate.m */; };
+		724A888717FD336B009D0FA4 /* GridDemoDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 724A888617FD336B009D0FA4 /* GridDemoDataSource.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +64,18 @@
 		722E093E17FBFD79004AC9FD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		722E094017FBFD79004AC9FD /* GridViewDemoTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridViewDemoTests.h; sourceTree = "<group>"; };
 		722E094117FBFD79004AC9FD /* GridViewDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GridViewDemoTests.m; sourceTree = "<group>"; };
+		722E094C17FC02EE004AC9FD /* GridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridLayout.h; path = GridView/GridLayout.h; sourceTree = "<group>"; };
+		722E094D17FC02EE004AC9FD /* GridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridLayout.m; path = GridView/GridLayout.m; sourceTree = "<group>"; };
+		722E094F17FC13CD004AC9FD /* GridViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridViewCell.h; path = GridView/GridViewCell.h; sourceTree = "<group>"; };
+		722E095017FC13CD004AC9FD /* GridViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridViewCell.m; path = GridView/GridViewCell.m; sourceTree = "<group>"; };
+		724A887C17FCF831009D0FA4 /* GridViewLayoutAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridViewLayoutAttribute.h; path = GridView/GridViewLayoutAttribute.h; sourceTree = "<group>"; };
+		724A887D17FCF831009D0FA4 /* GridViewLayoutAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridViewLayoutAttribute.m; path = GridView/GridViewLayoutAttribute.m; sourceTree = "<group>"; };
+		724A887F17FCFCD4009D0FA4 /* GridViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridViewDataSource.h; path = GridView/GridViewDataSource.h; sourceTree = "<group>"; };
+		724A888017FCFCD4009D0FA4 /* GridViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridViewDataSource.m; path = GridView/GridViewDataSource.m; sourceTree = "<group>"; };
+		724A888217FD31DC009D0FA4 /* GridViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridViewDelegate.h; path = GridView/GridViewDelegate.h; sourceTree = "<group>"; };
+		724A888317FD31DC009D0FA4 /* GridViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridViewDelegate.m; path = GridView/GridViewDelegate.m; sourceTree = "<group>"; };
+		724A888517FD336B009D0FA4 /* GridDemoDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridDemoDataSource.h; sourceTree = "<group>"; };
+		724A888617FD336B009D0FA4 /* GridDemoDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridDemoDataSource.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,12 +135,15 @@
 		722E091617FBFD79004AC9FD /* GridViewDemo */ = {
 			isa = PBXGroup;
 			children = (
+				722E094B17FC0265004AC9FD /* GridView */,
 				722E091F17FBFD79004AC9FD /* AppDelegate.h */,
 				722E092017FBFD79004AC9FD /* AppDelegate.m */,
 				722E092817FBFD79004AC9FD /* ViewController.h */,
 				722E092917FBFD79004AC9FD /* ViewController.m */,
 				722E092B17FBFD79004AC9FD /* ViewController.xib */,
 				722E091717FBFD79004AC9FD /* Supporting Files */,
+				724A888517FD336B009D0FA4 /* GridDemoDataSource.h */,
+				724A888617FD336B009D0FA4 /* GridDemoDataSource.m */,
 			);
 			path = GridViewDemo;
 			sourceTree = "<group>";
@@ -158,6 +179,23 @@
 				722E093D17FBFD79004AC9FD /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		722E094B17FC0265004AC9FD /* GridView */ = {
+			isa = PBXGroup;
+			children = (
+				722E094C17FC02EE004AC9FD /* GridLayout.h */,
+				722E094D17FC02EE004AC9FD /* GridLayout.m */,
+				722E094F17FC13CD004AC9FD /* GridViewCell.h */,
+				722E095017FC13CD004AC9FD /* GridViewCell.m */,
+				724A887C17FCF831009D0FA4 /* GridViewLayoutAttribute.h */,
+				724A887D17FCF831009D0FA4 /* GridViewLayoutAttribute.m */,
+				724A887F17FCFCD4009D0FA4 /* GridViewDataSource.h */,
+				724A888017FCFCD4009D0FA4 /* GridViewDataSource.m */,
+				724A888217FD31DC009D0FA4 /* GridViewDelegate.h */,
+				724A888317FD31DC009D0FA4 /* GridViewDelegate.m */,
+			);
+			name = GridView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,6 +311,12 @@
 				722E091D17FBFD79004AC9FD /* main.m in Sources */,
 				722E092117FBFD79004AC9FD /* AppDelegate.m in Sources */,
 				722E092A17FBFD79004AC9FD /* ViewController.m in Sources */,
+				722E094E17FC02EE004AC9FD /* GridLayout.m in Sources */,
+				722E095117FC13CD004AC9FD /* GridViewCell.m in Sources */,
+				724A887E17FCF831009D0FA4 /* GridViewLayoutAttribute.m in Sources */,
+				724A888117FCFCD4009D0FA4 /* GridViewDataSource.m in Sources */,
+				724A888417FD31DC009D0FA4 /* GridViewDelegate.m in Sources */,
+				724A888717FD336B009D0FA4 /* GridDemoDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +497,7 @@
 				722E094717FBFD79004AC9FD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		722E094817FBFD79004AC9FD /* Build configuration list for PBXNativeTarget "GridViewDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -461,6 +506,7 @@
 				722E094A17FBFD79004AC9FD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
