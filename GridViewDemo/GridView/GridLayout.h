@@ -30,9 +30,18 @@
  */
 @property (nonatomic) NSInteger numberOfColumns;
 
+/*!
+ 現在のscaleを反映した項目のサイズ
+ */
+@property (nonatomic) CGSize scaledItemSize;
+
 //@property (nonatomic, strong) NSObject<GridDataSource> *source;
 
 @property (nonatomic) CGPoint pinchPoint;
-@property (nonatomic) CGFloat pinchScale;
+@property (nonatomic) CGFloat scale;
+
+@property (nonatomic) CGFloat maxScale;
+@property (nonatomic) CGFloat minScale;
+
 
 @end

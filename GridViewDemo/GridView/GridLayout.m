@@ -32,6 +32,9 @@
     self.lineSpacing = 1;
     self.numberOfColumns = 10;
     self.contentSize = CGSizeZero;
+    self.maxScale = 2.5f;
+    self.minScale = 0.8f;
+    self.scale = 1.0f;
     
   }
   return self;
@@ -65,7 +68,6 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:0];
     UICollectionViewLayoutAttributes *cellAttributes
     = [self layoutAttributesForItemAtIndexPath:indexPath];
-    //CGRect cellRect = cellAttributes.frame;
     if (CGRectIntersectsRect(rect, cellAttributes.frame)) {
       [attributesArray addObject:cellAttributes];
     }
@@ -79,7 +81,7 @@
   CGRect itemFrame = [[self.itemFrames objectAtIndex:index] CGRectValue];
   GridViewLayoutAttribute *attributes
   = [GridViewLayoutAttribute layoutAttributesForCellWithIndexPath:path];
-  attributes.size = self.itemSize;
+  attributes.size = self.scaledItemSize;
   attributes.center = CGPointMake(CGRectGetMidX(itemFrame), CGRectGetMidY(itemFrame));
   return attributes;
 }
@@ -94,11 +96,26 @@
   [self invalidateLayout];
 }
 
-- (void)setPinchScale:(CGFloat)pinchScale {
+- (void)setScale:(CGFloat)scale {
   
-  _pinchScale = pinchScale;
-  [self invalidateLayout];
+  if(scale <= self.maxScale && scale >= self.minScale) {
+    CGFloat oldScale = _scale;
+    _scale = scale;
+    CGPoint point = [self.collectionView contentOffset];
+    point.x = [self newScrollOffsetFor:point.x newScale:_scale oldScale:oldScale];
+    point.y = [self newScrollOffsetFor:point.y newScale:_scale oldScale:oldScale];
+    [self.collectionView setContentOffset:point];
+    [self invalidateLayout];
+  }
 }
+
+- (CGSize)scaledItemSize {
+  CGSize curItemSize = self.itemSize;
+  curItemSize.height = self.itemSize.height * self.scale;
+  curItemSize.width = self.itemSize.width * self.scale;
+  return curItemSize;
+}
+
 
 #pragma mark - Private
 
@@ -107,8 +124,8 @@
   self.itemFrames = [NSMutableArray array];
   
   int numberOfItems = [self.collectionView numberOfItemsInSection:0];
-  CGFloat availableWidth = self.itemSize.width;
-  CGFloat availableHeight = self.itemSize.height;
+  CGFloat availableWidth = self.itemSize.width * self.scale;
+  CGFloat availableHeight = self.itemSize.height * self.scale;
   for (int item = 0; item < numberOfItems; item++)
   {
     int column = item % self.numberOfColumns;
@@ -116,8 +133,8 @@
     CGFloat left = (availableWidth + self.itemSpacing * 2) * column;
     CGFloat top = (availableHeight + self.lineSpacing * 2) * row;
 
-    
-    CGRect itemFrame = (CGRect){{left, top + self.collectionView.contentOffset.y}, self.itemSize};
+    CGRect itemFrame = (CGRect){{left, top},
+      self.scaledItemSize};
     [self.itemFrames addObject:[NSValue valueWithCGRect:itemFrame]];
     
   }
@@ -125,6 +142,20 @@
   int numberOfItemRows = floor(numberOfItems / self.numberOfColumns);
   self.contentSize = CGSizeMake((availableWidth + self.itemSpacing * 2) * self.numberOfColumns,
                                 (availableHeight + self.lineSpacing * 2) * numberOfItemRows);
+}
+
+/*!
+ Scale変更後のscroll offset計算.縦/横の位置計算に今日数
+ @param offset 変更前のscroll offset
+ @param newScale
+ @param oldScale
+ @return 新しいscroll offset
+ */
+- (CGFloat) newScrollOffsetFor:(CGFloat)offset
+                      newScale:(CGFloat)newScale
+                      oldScale:(CGFloat)oldScale {
+  
+  return offset * (newScale / oldScale);
 }
 
 @end

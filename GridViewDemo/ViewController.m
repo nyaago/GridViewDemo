@@ -11,11 +11,12 @@
 #import "GridViewDelegate.h"
 #import "GridLayout.h"
 #import "GridViewCell.h"
+#import "GridView.h"
 
 
 @interface ViewController ()
 
-@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) GridView *gridView;
 @property (nonatomic, strong) GridViewDelegate *delegate;
 @property (nonatomic, strong)   GridViewDataSource *viewDataSource;
 
@@ -32,22 +33,22 @@
   GridLayout *layout = [[GridLayout alloc] init];
   layout.numberOfColumns = [_viewDataSource.source columnCount];
   CGRect frame = [self.view frame];
-  _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:layout];
-  _collectionView.dataSource = _viewDataSource;
+  _gridView = [[GridView alloc] initWithFrame:frame gridLayout:layout];
+  _gridView.dataSource = _viewDataSource;
   _delegate = [[GridViewDelegate alloc] init];
-  _collectionView.delegate = _delegate;
-  _collectionView.backgroundColor = [UIColor grayColor];
-  _collectionView.directionalLockEnabled = NO;
-  [_collectionView registerClass:[GridViewCell class] forCellWithReuseIdentifier:[GridViewCell kind]];
+  _gridView.delegate = _delegate;
+  _gridView.backgroundColor = [UIColor grayColor];
+  _gridView.directionalLockEnabled = NO;
+  [_gridView registerClass:[GridViewCell class] forCellWithReuseIdentifier:[GridViewCell kind]];
   self.view.backgroundColor = [UIColor grayColor];
-  [self.view addSubview:_collectionView];
+  [self.view addSubview:_gridView];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void) viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   CGRect frame = self.view.bounds;
-  _collectionView.frame = frame;
+  _gridView.frame = frame;
 }
 
 - (void)didReceiveMemoryWarning
