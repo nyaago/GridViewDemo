@@ -28,8 +28,8 @@
   {
     // set default value to properties.
     self.itemSize = (CGSize){100, 25};
-    self.itemSpacing = 1;
-    self.lineSpacing = 1;
+    self.itemSpacing = 0;
+    self.lineSpacing = 0;
     self.numberOfColumns = 10;
     self.contentSize = CGSizeZero;
     self.maxScale = 2.5f;

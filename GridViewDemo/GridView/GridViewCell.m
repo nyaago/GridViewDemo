@@ -7,6 +7,7 @@
 //
 
 #import "GridViewCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 const NSString *kGridViewCellKind = @"GridViewCell";
 @implementation GridViewCell
@@ -17,6 +18,8 @@ const NSString *kGridViewCellKind = @"GridViewCell";
     self.backgroundColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
     [self.contentView addSubview:self.contentLabel];
     self.autoresizesSubviews = YES;
+    self.layer.borderColor = [UIColor grayColor].CGColor;
+    self.layer.borderWidth = 0.5f;
   }
   return self;
 }
@@ -33,6 +36,7 @@ const NSString *kGridViewCellKind = @"GridViewCell";
   frame.origin.y = 0;
   _contentLabel.frame = frame;
   _contentLabel.font = [UIFont systemFontOfSize:frame.size.height * 0.8f];
+  _contentLabel.backgroundColor = self.backgroundColor;
 }
 
 #pragma mark Properties
@@ -72,6 +76,22 @@ const NSString *kGridViewCellKind = @"GridViewCell";
 
 - (void) setRightPadding:(CGFloat)rightPadding {
   self.contentLabel.rightPadding = rightPadding;
+}
+
+- (void) setBorderColor:(UIColor *)borderColor {
+  self.layer.borderColor = borderColor.CGColor;
+}
+
+- (UIColor *) borderColor {
+  return [UIColor colorWithCGColor:self.layer.borderColor];
+}
+
+- (void) setBorderWidth:(CGFloat)borderWidth {
+  self.layer.borderWidth = borderWidth;
+}
+
+- (CGFloat) borderWidth {
+  return self.layer.borderWidth;
 }
 
 #pragma mark class Methods

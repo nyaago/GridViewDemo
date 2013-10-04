@@ -6,6 +6,7 @@
 //  Copyright (c) 2013年 nyaago. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "GridCellLabel.h"
 
 @implementation GridCellLabel
@@ -16,6 +17,7 @@
   if (self) {
     _leftPadding = 5.0f;
     _rightPadding = 5.0f;
+   self.backgroundColor = [UIColor whiteColor];
   }
   return self;
 }
