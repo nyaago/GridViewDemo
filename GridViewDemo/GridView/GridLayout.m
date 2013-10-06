@@ -81,7 +81,8 @@
   CGRect itemFrame = [[self.itemFrames objectAtIndex:index] CGRectValue];
   GridViewLayoutAttribute *attributes
   = [GridViewLayoutAttribute layoutAttributesForCellWithIndexPath:path];
-  attributes.size = self.scaledItemSize;
+  int column = index % self.numberOfColumns;
+  attributes.size = [self scaledItemSize:column];
   attributes.center = CGPointMake(CGRectGetMidX(itemFrame), CGRectGetMidY(itemFrame));
   return attributes;
 }
@@ -109,7 +110,7 @@
   }
 }
 
-- (CGSize)scaledItemSize {
+- (CGSize)scaledItemSize:(NSInteger)column {
   CGSize curItemSize = self.itemSize;
   curItemSize.height = self.itemSize.height * self.scale;
   curItemSize.width = self.itemSize.width * self.scale;
@@ -134,7 +135,7 @@
     CGFloat top = (availableHeight + self.lineSpacing * 2) * row;
 
     CGRect itemFrame = (CGRect){{left, top},
-      self.scaledItemSize};
+      [self scaledItemSize:column]} ;
     [self.itemFrames addObject:[NSValue valueWithCGRect:itemFrame]];
     
   }

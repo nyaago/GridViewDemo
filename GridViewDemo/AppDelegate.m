@@ -8,7 +8,8 @@
 
 #import "AppDelegate.h"
 
-#import "ViewController.h"
+#import "GridViewController.h"
+#import "GridDemoDataSource.h"
 
 @implementation AppDelegate
 
@@ -16,8 +17,13 @@
 {
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-  self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
-  self.window.rootViewController = self.viewController;
+  CGRect frame = [[UIScreen mainScreen] applicationFrame];
+  frame.origin.y = 0;
+  self.viewController = [self gridViewController];
+  self.navigationController = [[UINavigationController alloc]
+                               initWithRootViewController:self.viewController];
+  self.navigationController.navigationBarHidden = YES;
+  self.window.rootViewController = self.navigationController;
   [self.window makeKeyAndVisible];
   return YES;
 }
@@ -47,6 +53,17 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
   // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark Private
+
+- (UIViewController *)gridViewController {
+  CGRect frame = [[UIScreen mainScreen] applicationFrame];
+//  frame.origin.y = 0;
+  GridViewController *viewController = [[GridViewController alloc] initWithFrame:frame];
+  viewController.source = [[GridDemoDataSource alloc] init];
+
+  return viewController;
 }
 
 @end

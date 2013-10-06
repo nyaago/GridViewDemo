@@ -17,7 +17,7 @@
 		722E092317FBFD79004AC9FD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 722E092217FBFD79004AC9FD /* Default.png */; };
 		722E092517FBFD79004AC9FD /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 722E092417FBFD79004AC9FD /* Default@2x.png */; };
 		722E092717FBFD79004AC9FD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 722E092617FBFD79004AC9FD /* Default-568h@2x.png */; };
-		722E092A17FBFD79004AC9FD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 722E092917FBFD79004AC9FD /* ViewController.m */; };
+		722E092A17FBFD79004AC9FD /* GridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 722E092917FBFD79004AC9FD /* GridViewController.m */; };
 		722E092D17FBFD79004AC9FD /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 722E092B17FBFD79004AC9FD /* ViewController.xib */; };
 		722E093517FBFD79004AC9FD /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 722E093417FBFD79004AC9FD /* SenTestingKit.framework */; };
 		722E093617FBFD79004AC9FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 722E091017FBFD79004AC9FD /* UIKit.framework */; };
@@ -59,8 +59,8 @@
 		722E092217FBFD79004AC9FD /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		722E092417FBFD79004AC9FD /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		722E092617FBFD79004AC9FD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		722E092817FBFD79004AC9FD /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		722E092917FBFD79004AC9FD /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		722E092817FBFD79004AC9FD /* GridViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GridViewController.h; path = GridView/GridViewController.h; sourceTree = "<group>"; };
+		722E092917FBFD79004AC9FD /* GridViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GridViewController.m; path = GridView/GridViewController.m; sourceTree = "<group>"; };
 		722E092C17FBFD79004AC9FD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		722E093317FBFD79004AC9FD /* GridViewDemoTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GridViewDemoTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		722E093417FBFD79004AC9FD /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -144,8 +144,6 @@
 				722E094B17FC0265004AC9FD /* GridView */,
 				722E091F17FBFD79004AC9FD /* AppDelegate.h */,
 				722E092017FBFD79004AC9FD /* AppDelegate.m */,
-				722E092817FBFD79004AC9FD /* ViewController.h */,
-				722E092917FBFD79004AC9FD /* ViewController.m */,
 				722E092B17FBFD79004AC9FD /* ViewController.xib */,
 				722E091717FBFD79004AC9FD /* Supporting Files */,
 				724A888517FD336B009D0FA4 /* GridDemoDataSource.h */,
@@ -190,6 +188,8 @@
 		722E094B17FC0265004AC9FD /* GridView */ = {
 			isa = PBXGroup;
 			children = (
+				722E092817FBFD79004AC9FD /* GridViewController.h */,
+				722E092917FBFD79004AC9FD /* GridViewController.m */,
 				722E094C17FC02EE004AC9FD /* GridLayout.h */,
 				722E094D17FC02EE004AC9FD /* GridLayout.m */,
 				722E094F17FC13CD004AC9FD /* GridViewCell.h */,
@@ -320,7 +320,7 @@
 			files = (
 				722E091D17FBFD79004AC9FD /* main.m in Sources */,
 				722E092117FBFD79004AC9FD /* AppDelegate.m in Sources */,
-				722E092A17FBFD79004AC9FD /* ViewController.m in Sources */,
+				722E092A17FBFD79004AC9FD /* GridViewController.m in Sources */,
 				722E094E17FC02EE004AC9FD /* GridLayout.m in Sources */,
 				722E095117FC13CD004AC9FD /* GridViewCell.m in Sources */,
 				724A887E17FCF831009D0FA4 /* GridViewLayoutAttribute.m in Sources */,
