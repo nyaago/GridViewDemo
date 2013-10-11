@@ -10,6 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 const NSString *kGridViewCellKind = @"GridViewCell";
+const NSString *kGridViewRowHeaderCellKind = @"GridViewRowHeaderCell";
+const NSString *kGridViewColumnHeaderCellKind = @"GridViewColumnHeaderCell";
+
 @implementation GridViewCell
 
 - (id)initWithFrame:(CGRect)frame {
@@ -98,6 +101,14 @@ const NSString *kGridViewCellKind = @"GridViewCell";
 
 + (NSString *)kind {
   return (NSString *)kGridViewCellKind;
+}
+
++ (NSString *)rowHeaderKind {
+  return (NSString *)kGridViewRowHeaderCellKind;
+}
+
++ (NSString *)columnHeaderKind {
+  return (NSString *)kGridViewColumnHeaderCellKind;
 }
 
 

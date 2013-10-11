@@ -10,7 +10,6 @@
 
 @interface GridView()
 
-@property (nonatomic, weak) GridLayout *layout;
 @property (nonatomic, strong) UIPinchGestureRecognizer *pinchGestureRecognizer;
 
 @end
@@ -23,7 +22,7 @@
   self = [super initWithFrame:frame collectionViewLayout:layout];
   if(self) {
     _layout = layout;
-  
+    _respondToPinch = YES;
     [self initProperties];
   }
   return self;
@@ -47,14 +46,35 @@
 }
 */
 
+#pragma mark Properties
+
+- (void) setRespondToPinch:(BOOL)respondToPinch {
+  if(respondToPinch != _respondToPinch) {
+    if(respondToPinch == YES) {
+     [self addGestureRecognizer:self.pinchGestureRecognizer];
+    }
+    else {
+      [self removeGestureRecognizer:self.pinchGestureRecognizer];
+    }
+  }
+  _respondToPinch = respondToPinch;
+}
+
 #pragma mark Action
 
 - (void)pinchAction : (UIPinchGestureRecognizer *)sender {
   if(_layout) {
     CGFloat scale = [sender scale];
     NSLog(@"pinch - scale = %f", scale);
-    _layout.scale = _layout.scale * scale;
-    [_layout invalidateLayout];
+    if(self.gestureDelegate) {
+      if([self.gestureDelegate respondsToSelector:@selector(gridView:pinchGestured:)]) {
+        [self.gestureDelegate gridView:self pinchGestured:self.pinchGestureRecognizer];
+      }
+    }
+    else {
+      _layout.scale = _layout.scale * scale;
+      [_layout invalidateLayout];
+    }
     
   }
 }

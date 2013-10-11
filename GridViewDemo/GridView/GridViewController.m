@@ -7,7 +7,6 @@
 //
 
 #import "GridViewController.h"
-#import "GridDemoDataSource.h"
 #import "GridViewDelegate.h"
 #import "GridLayout.h"
 #import "GridViewCell.h"
@@ -19,20 +18,11 @@
 @property (nonatomic, strong) GridView *gridView;
 @property (nonatomic, strong) GridViewDelegate *delegate;
 @property (nonatomic, strong)   GridViewDataSource *viewDataSource;
-@property (nonatomic) CGRect frame;
 
 @end
 
 @implementation GridViewController
 
-
-- (id)initWithFrame:(CGRect)frame {
-  self = [super init];
-  if(self) {
-    self.frame = frame;
-  }
-  return self;
-}
 
 - (void)viewDidLoad
 {
@@ -42,7 +32,7 @@
   GridLayout *layout = [[GridLayout alloc] init];
   layout.numberOfColumns = [_viewDataSource.source columnCount];
   CGRect frame = [self.view frame];
-  frame.origin.y = 0;
+//  frame.origin.y = 0;
   _gridView = [[GridView alloc] initWithFrame:frame gridLayout:layout];
   _gridView.dataSource = _viewDataSource;
   _delegate = [[GridViewDelegate alloc] init];
@@ -52,7 +42,6 @@
   [_gridView registerClass:[GridViewCell class] forCellWithReuseIdentifier:[GridViewCell kind]];
   self.view.backgroundColor = [UIColor grayColor];
   [self.view addSubview:_gridView];
-	// Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void) viewDidAppear:(BOOL)animated {

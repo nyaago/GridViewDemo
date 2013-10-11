@@ -17,6 +17,17 @@
 + (NSString *)kind;
 
 /*!
+ CellのReuseのためのキャッシュに使う識別値 - 行ヘッダー用
+ */
++ (NSString *)rowHeaderKind;
+
+/*!
+ CellのReuseのためのキャッシュに使う識別値 - 列ヘッダー用
+ */
++ (NSString *)columnHeaderKind;
+
+
+/*!
  Cell内に配置するlabel view
  */
 @property (nonatomic, strong) GridCellLabel *contentLabel;

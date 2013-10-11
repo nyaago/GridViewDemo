@@ -15,7 +15,6 @@
 NSObject<GridDataSource> *_source;
 }
 
-- (id)initWithFrame:(CGRect)frame;
 
 @property (nonatomic) NSObject<GridDataSource> *source;
 

@@ -102,6 +102,7 @@
   if(scale <= self.maxScale && scale >= self.minScale) {
     CGFloat oldScale = _scale;
     _scale = scale;
+    NSLog(@"oldScale / newScale = %f / %f", oldScale, _scale);
     CGPoint point = [self.collectionView contentOffset];
     point.x = [self newScrollOffsetFor:point.x newScale:_scale oldScale:oldScale];
     point.y = [self newScrollOffsetFor:point.y newScale:_scale oldScale:oldScale];
@@ -111,7 +112,7 @@
 }
 
 - (CGSize)scaledItemSize:(NSInteger)column {
-  CGSize curItemSize = self.itemSize;
+  CGSize curItemSize = CGSizeMake(self.itemSize.width, self.itemSize.height);
   curItemSize.height = self.itemSize.height * self.scale;
   curItemSize.width = self.itemSize.width * self.scale;
   return curItemSize;

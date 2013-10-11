@@ -39,10 +39,43 @@
  */
 - (void) setValue:(NSString *)value atRow:(NSInteger)row atColumn:(NSInteger)column;
 
+/*!
+ @param row 行Index(0 base)
+ @return 指定行のタイトル
+ */
+- (NSString *) rowTitleAt:(NSInteger)row;
+
+
+/*!
+ @param column 列Index(0 base)
+ @return 指定列のタイトル
+ */
+- (NSString *) columnTitleAt:(NSInteger)column;
 
 @end
 
+/*!
+ GridViewのデータソース
+ */
 @interface GridViewDataSource : NSObject <UICollectionViewDataSource>
+
+@property (nonatomic, strong) NSObject<GridDataSource> *source;
+
+@end
+
+/*!
+ GridViewの行ヘッダーデータソース
+ */
+@interface GridRowHeaderDataSource : NSString <UICollectionViewDataSource>
+
+@property (nonatomic, strong) NSObject<GridDataSource> *source;
+
+@end
+
+/*!
+ GridViewの列ヘッダーデータソース
+ */
+@interface GridColumnHeaderDataSource : NSString <UICollectionViewDataSource>
 
 @property (nonatomic, strong) NSObject<GridDataSource> *source;
 

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import "GridViewController.h"
+#import "ItemGridViewController.h"
 #import "GridDemoDataSource.h"
 
 @implementation AppDelegate
@@ -17,13 +18,12 @@
 {
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-  CGRect frame = [[UIScreen mainScreen] applicationFrame];
-  frame.origin.y = 0;
-  self.viewController = [self gridViewController];
+  self.viewController = [self itemGridViewController];
   self.navigationController = [[UINavigationController alloc]
                                initWithRootViewController:self.viewController];
   self.navigationController.navigationBarHidden = YES;
-  self.window.rootViewController = self.navigationController;
+  [self.window setRootViewController:self.navigationController];
+  self.viewController.navigationItem.title = @"title";
   [self.window makeKeyAndVisible];
   return YES;
 }
@@ -58,12 +58,20 @@
 #pragma mark Private
 
 - (UIViewController *)gridViewController {
-  CGRect frame = [[UIScreen mainScreen] applicationFrame];
-//  frame.origin.y = 0;
-  GridViewController *viewController = [[GridViewController alloc] initWithFrame:frame];
+  GridViewController *viewController = [[GridViewController alloc] init];
   viewController.source = [[GridDemoDataSource alloc] init];
 
   return viewController;
 }
+
+- (UIViewController *)itemGridViewController {
+  ItemGridViewController *viewController = [[ItemGridViewController alloc] init];
+//  ItemGridViewController *viewController = [[ItemGridViewController alloc] initWithNibName:@"ViewController" bundle:nil];
+  viewController.source = [[GridDemoDataSource alloc] init];
+  
+  return viewController;
+}
+
+
 
 @end

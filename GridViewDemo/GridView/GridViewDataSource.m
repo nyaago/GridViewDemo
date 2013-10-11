@@ -31,7 +31,7 @@
   // セルは常に再利用される。
   // 再利用キューにセルが1つもない場合、新規に作成されたセルが返される。
   // Reuse identifierを登録する必要がある
-  GridViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"GridViewCell"
+  GridViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[GridViewCell kind]
                                                                  forIndexPath:indexPath];
   NSInteger index = [indexPath indexAtPosition:1];
   NSInteger row = [self rowByIndex:index];
@@ -67,5 +67,77 @@
 
 
 #pragma mark -
+
+@end
+
+@implementation GridRowHeaderDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+  
+  if(self.source == nil) {
+    return 0;
+  }
+  return self.source.rowCount;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+  
+  return 1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  
+  GridViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[GridViewCell rowHeaderKind]
+                                                                 forIndexPath:indexPath];
+  cell.backgroundColor = [UIColor lightGrayColor];
+  NSInteger index = [indexPath indexAtPosition:1];
+  NSString *value;
+  if([self.source respondsToSelector:@selector(rowTitleAt:)]) {
+    value = [self.source rowTitleAt:index];
+  }
+  else {
+    value = [NSString stringWithFormat:@"%d", index + 1];
+  }
+  cell.text = value == nil ? @"" : value;
+  return cell;
+}
+
+@end
+
+@implementation GridColumnHeaderDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+  
+  if(self.source == nil) {
+    return 0;
+  }
+  return self.source.columnCount;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+  
+  return 1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+  
+  GridViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[GridViewCell columnHeaderKind]
+                                                                 forIndexPath:indexPath];
+  cell.backgroundColor = [UIColor lightGrayColor];
+  NSInteger index = [indexPath indexAtPosition:1];
+  NSString *value;
+  if([self.source respondsToSelector:@selector(columnTitleAt:)]) {
+    value = [self.source columnTitleAt:index];
+  }
+  else {
+    value = [NSString stringWithFormat:@"%d", index + 1];
+  }
+  cell.text = value == nil ? @"" : value;
+  return cell;
+}
 
 @end

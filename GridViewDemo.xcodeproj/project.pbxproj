@@ -26,6 +26,7 @@
 		722E094217FBFD79004AC9FD /* GridViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 722E094117FBFD79004AC9FD /* GridViewDemoTests.m */; };
 		722E094E17FC02EE004AC9FD /* GridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 722E094D17FC02EE004AC9FD /* GridLayout.m */; };
 		722E095117FC13CD004AC9FD /* GridViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 722E095017FC13CD004AC9FD /* GridViewCell.m */; };
+		7248331C180664510053715E /* ItemGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7248331B180664510053715E /* ItemGridViewController.m */; };
 		724A887E17FCF831009D0FA4 /* GridViewLayoutAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 724A887D17FCF831009D0FA4 /* GridViewLayoutAttribute.m */; };
 		724A888117FCFCD4009D0FA4 /* GridViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 724A888017FCFCD4009D0FA4 /* GridViewDataSource.m */; };
 		724A888417FD31DC009D0FA4 /* GridViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 724A888317FD31DC009D0FA4 /* GridViewDelegate.m */; };
@@ -72,6 +73,8 @@
 		722E094D17FC02EE004AC9FD /* GridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridLayout.m; path = GridView/GridLayout.m; sourceTree = "<group>"; };
 		722E094F17FC13CD004AC9FD /* GridViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridViewCell.h; path = GridView/GridViewCell.h; sourceTree = "<group>"; };
 		722E095017FC13CD004AC9FD /* GridViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridViewCell.m; path = GridView/GridViewCell.m; sourceTree = "<group>"; };
+		7248331A180664510053715E /* ItemGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemGridViewController.h; path = GridView/ItemGridViewController.h; sourceTree = "<group>"; };
+		7248331B180664510053715E /* ItemGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemGridViewController.m; path = GridView/ItemGridViewController.m; sourceTree = "<group>"; };
 		724A887C17FCF831009D0FA4 /* GridViewLayoutAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridViewLayoutAttribute.h; path = GridView/GridViewLayoutAttribute.h; sourceTree = "<group>"; };
 		724A887D17FCF831009D0FA4 /* GridViewLayoutAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridViewLayoutAttribute.m; path = GridView/GridViewLayoutAttribute.m; sourceTree = "<group>"; };
 		724A887F17FCFCD4009D0FA4 /* GridViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridViewDataSource.h; path = GridView/GridViewDataSource.h; sourceTree = "<group>"; };
@@ -204,6 +207,8 @@
 				724A888917FD5C36009D0FA4 /* GridView.m */,
 				720D8D2017FDC67800D2D8B3 /* GridCellLabel.h */,
 				720D8D2117FDC67800D2D8B3 /* GridCellLabel.m */,
+				7248331A180664510053715E /* ItemGridViewController.h */,
+				7248331B180664510053715E /* ItemGridViewController.m */,
 			);
 			name = GridView;
 			sourceTree = "<group>";
@@ -329,6 +334,7 @@
 				724A888417FD31DC009D0FA4 /* GridViewDelegate.m in Sources */,
 				724A888717FD336B009D0FA4 /* GridDemoDataSource.m in Sources */,
 				724A888A17FD5C36009D0FA4 /* GridView.m in Sources */,
+				7248331C180664510053715E /* ItemGridViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
