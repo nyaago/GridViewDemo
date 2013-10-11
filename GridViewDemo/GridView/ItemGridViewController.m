@@ -64,6 +64,8 @@
   [self createRowHeaderView];
 
   self.view.backgroundColor = [UIColor grayColor];
+  _gridView.allowsSelection = YES;
+
   [self.view addSubview:_columnHeaderGridView];
   [self.view addSubview:_rowHeaderGridView];
   [self.view addSubview:_gridView];
@@ -72,13 +74,18 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   _gridView.frame = self.gridViewFrame;
+  _gridView.allowsMultipleSelection = self.allowsMultipleSelection;
+  _gridView.allowsSelection = self.allowsSelection;
   _rowHeaderGridView.frame = self.rowHeaderViewFrame;
   _columnHeaderGridView.frame = self.columnHeaderViewFrame;
+  
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
   _gridView.frame = self.gridViewFrame;
+  _gridView.allowsMultipleSelection = self.allowsMultipleSelection;
+  _gridView.allowsSelection = self.allowsSelection;
   _rowHeaderGridView.frame = self.rowHeaderViewFrame;
   _columnHeaderGridView.frame = self.columnHeaderViewFrame;
 }
@@ -109,6 +116,7 @@
   _rowHeaderGridView.layout.minScale  = minScale;
   _columnHeaderGridView.layout.minScale = minScale;
 }
+
 
 #pragma mark GridViewGestureDelegate
 
@@ -157,6 +165,39 @@
     self.gridView.contentOffset = p;
   }
 }
+
+#pragma mark UICollectionViewDelegate
+
+- (BOOL)collectionView:(UICollectionView *)collectionView
+shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  
+  return YES;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  NSInteger i = [indexPath indexAtPosition:1];
+  NSLog(@"cell %d is selected", i);
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView
+shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+  return YES;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+  NSInteger i = [indexPath indexAtPosition:1];
+  NSLog(@"cell %d is deselected", i);
+  
+}
+
+/*
+ - (BOOL)collectionView:(UICollectionView *)collectionView
+ shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+ return YES;
+ }
+ */
 
 
 #pragma mark Private

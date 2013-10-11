@@ -18,7 +18,7 @@
 {
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-  self.viewController = [self itemGridViewController];
+  self.viewController = [self gridViewController];
   self.navigationController = [[UINavigationController alloc]
                                initWithRootViewController:self.viewController];
   self.navigationController.navigationBarHidden = YES;
@@ -60,6 +60,8 @@
 - (UIViewController *)gridViewController {
   GridViewController *viewController = [[GridViewController alloc] init];
   viewController.source = [[GridDemoDataSource alloc] init];
+  viewController.allowsMultipleSelection = YES;
+  viewController.allowsSelection = YES;
 
   return viewController;
 }
@@ -68,7 +70,8 @@
   ItemGridViewController *viewController = [[ItemGridViewController alloc] init];
 //  ItemGridViewController *viewController = [[ItemGridViewController alloc] initWithNibName:@"ViewController" bundle:nil];
   viewController.source = [[GridDemoDataSource alloc] init];
-  
+  viewController.allowsMultipleSelection = YES;
+  viewController.allowsSelection = YES;
   return viewController;
 }
 

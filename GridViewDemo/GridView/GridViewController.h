@@ -10,12 +10,13 @@
 #import "GridViewDataSource.h"
 
 
-@interface GridViewController : UIViewController {
+@interface GridViewController : UIViewController <UICollectionViewDelegate> {
 
 NSObject<GridDataSource> *_source;
 }
 
 
 @property (nonatomic) NSObject<GridDataSource> *source;
-
+@property (nonatomic) BOOL allowsMultipleSelection;
+@property (nonatomic) BOOL allowsSelection;
 @end

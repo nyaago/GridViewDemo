@@ -21,6 +21,8 @@ NSObject<GridDataSource> *_source;
 @property (nonatomic) NSObject<GridDataSource> *source;
 @property (nonatomic) CGFloat minScale;
 @property (nonatomic) CGFloat maxScale;
+@property (nonatomic) BOOL allowsMultipleSelection;
+@property (nonatomic) BOOL allowsSelection;
 
 
 @end

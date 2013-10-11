@@ -47,5 +47,6 @@
 
 @property (nonatomic, assign) CGFloat borderWidth;
 @property (nonatomic, weak) UIColor *borderColor;
+@property (nonatomic, assign) UIColor *selectedBackgroundColor;
 
 @end

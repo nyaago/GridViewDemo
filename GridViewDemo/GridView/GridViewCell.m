@@ -19,6 +19,7 @@ const NSString *kGridViewColumnHeaderCellKind = @"GridViewColumnHeaderCell";
   self = [super initWithFrame:frame];
   if (self) {
     self.backgroundColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
+    self.selectedBackgroundColor = [UIColor grayColor];
     [self.contentView addSubview:self.contentLabel];
     self.autoresizesSubviews = YES;
     self.layer.borderColor = [UIColor grayColor].CGColor;
@@ -39,8 +40,25 @@ const NSString *kGridViewColumnHeaderCellKind = @"GridViewColumnHeaderCell";
   frame.origin.y = 0;
   _contentLabel.frame = frame;
   _contentLabel.font = [UIFont systemFontOfSize:frame.size.height * 0.8f];
-  _contentLabel.backgroundColor = self.backgroundColor;
+  if(self.selected) {
+    _contentLabel.backgroundColor = self.selectedBackgroundColor;
+  }
+  else {
+    _contentLabel.backgroundColor = self.backgroundColor;
+  }
 }
+
+- (void) setSelected:(BOOL)selected {
+  [super setSelected:selected];
+  if(self.selected) {
+    _contentLabel.backgroundColor = self.selectedBackgroundColor;
+  }
+  else {
+    _contentLabel.backgroundColor = self.backgroundColor;
+  }
+  
+}
+
 
 #pragma mark Properties
 
@@ -56,6 +74,7 @@ const NSString *kGridViewColumnHeaderCellKind = @"GridViewColumnHeaderCell";
   }
   return _contentLabel;
 }
+
 
 - (void) setText:(NSString *)text {
   self.contentLabel.text = text;
