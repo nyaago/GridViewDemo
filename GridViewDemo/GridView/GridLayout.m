@@ -68,8 +68,13 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:0];
     UICollectionViewLayoutAttributes *cellAttributes
     = [self layoutAttributesForItemAtIndexPath:indexPath];
+          if(numOfItems == 20) {
+        NSLog(@"intersect ? %d -  %f/%f", item,  rect.origin.y, cellAttributes.frame.origin.y);
+      }
+    
     if (CGRectIntersectsRect(rect, cellAttributes.frame)) {
       [attributesArray addObject:cellAttributes];
+      NSLog(@"OK..");
     }
   }
   return attributesArray;
@@ -132,8 +137,8 @@
   {
     int column = item % self.numberOfColumns;
     int row = floor(item / self.numberOfColumns);
-    CGFloat left = (availableWidth + self.itemSpacing * 2) * column;
-    CGFloat top = (availableHeight + self.lineSpacing * 2) * row;
+    CGFloat left = (availableWidth + self.itemSpacing) * column;
+    CGFloat top = (availableHeight + self.lineSpacing ) * row;
 
     CGRect itemFrame = (CGRect){{left, top},
       [self scaledItemSize:column]} ;
@@ -142,8 +147,11 @@
   }
   
   int numberOfItemRows = floor(numberOfItems / self.numberOfColumns);
-  self.contentSize = CGSizeMake((availableWidth + self.itemSpacing * 2) * self.numberOfColumns,
-                                (availableHeight + self.lineSpacing * 2) * numberOfItemRows);
+  self.contentSize = CGSizeMake((availableWidth + self.itemSpacing ) * self.numberOfColumns
+                                + self.itemSpacing,
+                                (availableHeight + self.lineSpacing) * numberOfItemRows
+                                + self.lineSpacing  );
+  NSLog(@"content height -  %f", self.contentSize.height);
 }
 
 /*!

@@ -29,7 +29,16 @@
 @property (nonatomic) CGFloat rowHeaderWidth;
 @property (nonatomic) CGSize cellSize;
 //@property (nonatomic) CGRect frame;
-@property (nonatomic) CGFloat contentsTop;
+
+/** 
+ * view の Frameの計算
+ */
+- (CGRect) viewFrame;
+
+/**
+ * status bar の高さ
+ */
+- (CGFloat) statusBarHeight;
 
 @end
 
@@ -62,6 +71,7 @@
   [self createGridView];
   [self createColumnHeaderView];
   [self createRowHeaderView];
+  self.view.autoresizesSubviews = NO;
 
   self.view.backgroundColor = [UIColor grayColor];
   _gridView.allowsSelection = YES;
@@ -73,16 +83,11 @@
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-  _gridView.frame = self.gridViewFrame;
-  _gridView.allowsMultipleSelection = self.allowsMultipleSelection;
-  _gridView.allowsSelection = self.allowsSelection;
-  _rowHeaderGridView.frame = self.rowHeaderViewFrame;
-  _columnHeaderGridView.frame = self.columnHeaderViewFrame;
-  
 }
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
+  self.view.frame = [self viewFrame];
   _gridView.frame = self.gridViewFrame;
   _gridView.allowsMultipleSelection = self.allowsMultipleSelection;
   _gridView.allowsSelection = self.allowsSelection;
@@ -92,7 +97,6 @@
 
 - (void) viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
-  
 }
 
 - (void)didReceiveMemoryWarning {
@@ -209,6 +213,8 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
   self.scale = 1.0f;
   self.maxScale = 1.5f;
   self.minScale = 0.8f;
+  self.autosizing = YES;
+  self.contentsTop = 0;
 }
 
 - (void) initProperties {
@@ -237,8 +243,13 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (CGSize) scaledGridViewSize {
+  CGFloat toolbarHeight
+  = (self.navigationController.toolbarHidden == NO &&  self.navigationController.toolbar ?
+     self.navigationController.toolbar.frame.size.height : 0);
   return CGSizeMake(self.view.frame.size.width - self.scaledRowHeaderWidth,
-                    self.view.frame.size.height - self.scaledColumnHeaderHeight - self.contentsTop);
+                    self.view.frame.size.height - self.scaledColumnHeaderHeight
+                    - self.contentsTop
+                    - toolbarHeight );
 }
 
 - (CGRect) gridViewFrame {
@@ -254,22 +265,50 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (CGRect) columnHeaderViewFrame {
+  NSLog(@"height = %f", self.scaledColumnHeaderHeight + self.contentsTop - 10);
+  // @TODO - y, height への offsetの減算,加算 - なぜ必要?
+  CGFloat offset = 0;
+  offset = [self statusBarHeight];
+  if(self.navigationController.navigationBarHidden == NO) {
+    offset += self.navigationController.navigationBar.frame.size.height;
+  }
   return CGRectMake(self.scaledRowHeaderWidth,
-                    0.0f ,
+                    0.0f + self.contentsTop - offset ,
                     self.scaledGridViewSize.width,
-                    self.scaledColumnHeaderHeight +  self.contentsTop);
+                    self.scaledColumnHeaderHeight + offset );
 }
 
 - (CGFloat) contentsTop {
 
-  if(_contentsTop == 0.0f) {
-    CGRect frame = [[UIScreen mainScreen] applicationFrame];
-    _contentsTop = (frame.origin.y > frame.origin.x ?  frame.origin.y : frame.origin.x);
-    if(self.navigationController.navigationBarHidden == NO) {
-      _contentsTop += self.navigationController.navigationBar.frame.size.height;
-    }
-  }
   return _contentsTop;
+}
+
+- (CGRect) viewFrame {
+  
+  if(self.autosizing) {
+    CGRect frame = self.view.frame;
+//    CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
+    CGFloat offset = [self statusBarHeight];
+    frame.origin.y  = offset;
+    frame.size.height -= offset;
+    if(self.navigationController.navigationBarHidden == NO) {
+      frame.origin.y += self.navigationController.navigationBar.frame.size.height;
+      frame.size.height -= self.navigationController.navigationBar.frame.size.height;
+    }
+    if(self.navigationController.tabBarController &&
+       self.navigationController.tabBarController.tabBar &&
+       self.navigationController.tabBarController.tabBar.hidden == NO) {
+      frame.size.height -= self.navigationController.tabBarController.tabBar.frame.size.height;
+    }
+    if(self.navigationController.toolbarHidden == NO) {
+      frame.size.height -= self.navigationController.toolbar.frame.size.height;
+    }
+    return frame;
+  }
+  else {
+    return self.view.frame;
+  }
+  
 }
 
 // GridViewを生成
@@ -280,7 +319,8 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
   GridLayout *layout = [[GridLayout alloc] init];
   layout.numberOfColumns = [_viewDataSource.source columnCount];
   layout.itemSize = self.scaledCellSize;
-  _gridView = [[GridView alloc] initWithFrame:self.gridViewFrame gridLayout:layout];
+  _gridView = [[GridView alloc] initWithFrame:self.gridViewFrame
+                                   gridLayout:layout];
   _gridView.alwaysBounceVertical = NO;
   _gridView.alwaysBounceHorizontal = NO;
   _gridView.bounces = NO;
@@ -334,6 +374,11 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
   _columnHeaderGridView.directionalLockEnabled = NO;
   [_columnHeaderGridView registerClass:[GridViewCell class]
          forCellWithReuseIdentifier:[GridViewCell columnHeaderKind]];
+}
+
+- (CGFloat) statusBarHeight {
+  CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
+  return MIN(statusBarSize.width, statusBarSize.height);
 }
 
 
