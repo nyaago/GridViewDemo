@@ -23,7 +23,12 @@ NSObject<GridDataSource> *_source;
 @property (nonatomic) CGFloat maxScale;
 @property (nonatomic) BOOL allowsMultipleSelection;
 @property (nonatomic) BOOL allowsSelection;
+@property (nonatomic) BOOL allowsRowSelection;
+@property (nonatomic) BOOL allowsColumnSelection;
 @property (nonatomic) BOOL autosizing;
 @property (nonatomic) CGFloat contentsTop;
+
+- (void) clearSelection;
+
 
 @end

@@ -69,12 +69,12 @@
     UICollectionViewLayoutAttributes *cellAttributes
     = [self layoutAttributesForItemAtIndexPath:indexPath];
           if(numOfItems == 20) {
-        NSLog(@"intersect ? %d -  %f/%f", item,  rect.origin.y, cellAttributes.frame.origin.y);
+//        NSLog(@"intersect ? %d -  %f/%f", item,  rect.origin.y, cellAttributes.frame.origin.y);
       }
     
     if (CGRectIntersectsRect(rect, cellAttributes.frame)) {
       [attributesArray addObject:cellAttributes];
-      NSLog(@"OK..");
+//      NSLog(@"OK..");
     }
   }
   return attributesArray;
