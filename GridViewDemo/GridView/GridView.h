@@ -15,7 +15,12 @@
  */
 @protocol GridViewGestureDelegate <NSObject>
 
+@optional
+
+- (void) gridView:(GridView *)view tapGestured:(UITapGestureRecognizer *)gestureRecognizer;
 - (void) gridView:(GridView *)view pinchGestured:(UIPinchGestureRecognizer *)gestureRecognizer;
+- (void) gridView:(GridView *)view longPressGestured:(UILongPressGestureRecognizer *)gestureRecognizer;
+
 
 @end
 
@@ -24,9 +29,12 @@
 
 - (id) initWithFrame:(CGRect)frame gridLayout:(GridLayout *)layout;
 
+@property (nonatomic) BOOL respondToTap;
 @property (nonatomic) BOOL respondToPinch;
+@property (nonatomic) BOOL respondToLongPress;
 @property (nonatomic) BOOL forwardPinchGesture;
 @property (nonatomic, weak) GridLayout *layout;
 @property (nonatomic, weak) NSObject<GridViewGestureDelegate> *gestureDelegate;
+
 
 @end

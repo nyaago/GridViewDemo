@@ -33,6 +33,7 @@
   // Reuse identifierを登録する必要がある
   GridViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[GridViewCell kind]
                                                                  forIndexPath:indexPath];
+  cell.colorProvider = self.colorProvider;
   NSInteger index = [indexPath indexAtPosition:1];
   NSInteger row = [self rowByIndex:index];
   NSInteger column = [self columnByIndex:index];
@@ -40,6 +41,15 @@
     NSString *value = [self.source valueAtRow:row atColumn:column];
     cell.text = value == nil ? @"" : value;
   }
+  if([self.source respondsToSelector:@selector(activeAtRow:atColumn:)]) {
+    if([self.source activeAtRow:row atColumn:column] ) {
+      [cell setActived:YES];
+    }
+    else {
+      [cell setActived:NO];
+    }
+  }
+
   return cell;
 }
 
@@ -86,6 +96,7 @@
   return 1;
 }
 
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   
@@ -100,6 +111,7 @@
   else {
     value = [NSString stringWithFormat:@"%d", index + 1];
   }
+
   cell.text = value == nil ? @"" : value;
   return cell;
 }

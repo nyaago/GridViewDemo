@@ -11,14 +11,13 @@
 #import "GridLayout.h"
 #import "GridViewCell.h"
 #import "GridView.h"
+#import "GridCellInfo.h"
 
 @interface ItemGridViewController ()
 
-@property (nonatomic, strong) GridView *gridView;
 @property (nonatomic, strong) GridView *rowHeaderGridView;
 @property (nonatomic, strong) GridView *columnHeaderGridView;
 @property (nonatomic, strong) GridViewDelegate *delegate;
-@property (nonatomic, strong)   GridViewDataSource *viewDataSource;
 @property (nonatomic, strong)   GridRowHeaderDataSource *rowHeaderDataSource;
 @property (nonatomic, strong)   GridColumnHeaderDataSource *columnHeaderDataSource;
 
@@ -28,6 +27,10 @@
 @property (nonatomic) CGFloat columnHeaderHeight;
 @property (nonatomic) CGFloat rowHeaderWidth;
 @property (nonatomic) CGSize cellSize;
+
+@property (nonatomic) CGFloat prevPinchScale;
+@property (nonatomic) CGFloat scaleWhenPinchBegan;
+
 
 //@property (nonatomic) CGRect frame;
 
@@ -82,6 +85,11 @@
   self.view.backgroundColor = [UIColor grayColor];
   _gridView.allowsSelection = YES;
 
+  if([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+  }
+//  UIView *view = [[UIView alloc] initWithFrame:[self contentsFrame]];
+//  [self.view addSubview:view];
   [self.view addSubview:_columnHeaderGridView];
   [self.view addSubview:_rowHeaderGridView];
   [self.view addSubview:_gridView];
@@ -89,6 +97,10 @@
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+  self.view.frame = [self viewFrame];
+  
+  NSLog(@"frame y, height - %f,%f", self.view.frame.origin.y, self.view.frame.size.height);
+
   [self setFrameOfViews];
 }
 
@@ -98,6 +110,8 @@
 
 - (void) viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
+  self.view.frame = [self viewFrame];
+
   [self setFrameOfViews];
   
 }
@@ -119,6 +133,29 @@
 
 #pragma mark - Public Methods
 
+- (NSArray *) selectedGridCellInfos {
+  NSMutableArray *array = [[NSMutableArray alloc] init];
+  for(NSIndexPath *indexPath in [self.gridView indexPathsForSelectedItems] ) {
+    NSUInteger index = [indexPath indexAtPosition:1];
+    [array addObject:[[GridCellInfo alloc] initWithRow:index / [self.source columnCount]
+                                                column:index % [self.source columnCount]]];
+  }
+  return array;
+}
+
+- (BOOL) isSelectedWithRow:(NSInteger)row column:(NSInteger)column
+             gridCellInfos:(NSArray *) gridCellInfos {
+ 
+  for(GridCellInfo *gridCellInfo in gridCellInfos) {
+    if(gridCellInfo.row == row && gridCellInfo.column == column) {
+      return YES;
+    }
+  }
+  return NO;
+}
+
+
+
 - (void) clearSelection {
   NSInteger count = [self.source columnCount] * [self.source rowCount];
   for(int i = 0; i < count; ++i) {
@@ -139,6 +176,42 @@
 }
 
 
+
+
+- (BOOL) isSelectedWithRow:(NSInteger)row column:(NSInteger)column {
+  
+  GridViewCell *cell
+  = (GridViewCell *)[self.gridView
+                     cellForItemAtIndexPath:[NSIndexPath
+                                             indexPathForRow:self.source.columnCount * row + column
+                                                   inSection:0]];
+  return  cell.isSelected;
+}
+
+- (void) setAllowsSelection:(BOOL)allowsColumnSelection {
+  _allowsSelection = allowsColumnSelection;
+  self.gridView.allowsSelection = _allowsSelection;
+  self.rowHeaderGridView.allowsSelection = _allowsSelection && self.allowsRowSelection;
+}
+
+- (void) setAllowsMultipleSelection:(BOOL)allowsMultipleSelection {
+  _allowsMultipleSelection = allowsMultipleSelection;
+  self.gridView.allowsMultipleSelection = _allowsMultipleSelection;
+  self.columnHeaderGridView.allowsMultipleSelection = _allowsMultipleSelection;
+  self.rowHeaderGridView.allowsMultipleSelection = _allowsMultipleSelection;
+}
+
+- (void) setAllowsColumnSelection:(BOOL)allowsColumnSelection {
+  _allowsColumnSelection = allowsColumnSelection;
+  self.columnHeaderGridView.allowsSelection = _allowsColumnSelection;
+}
+
+- (void) setAllowsRowSelection:(BOOL)allowsRowSelection {
+  _allowsRowSelection = allowsRowSelection;
+  self.rowHeaderGridView.allowsSelection = _allowsRowSelection;
+}
+
+
 #pragma mark Properties
 
 - (void) setMaxScale:(CGFloat)maxScale {
@@ -155,30 +228,53 @@
   _columnHeaderGridView.layout.minScale = minScale;
 }
 
+- (void) setSource:(NSObject<GridDataSource> *)source {
+  _source = source;
+  if(_viewDataSource) {
+    _viewDataSource.source = self.source;
+  }
+}
 
 #pragma mark GridViewGestureDelegate
 
 - (void) gridView:(GridView *)view pinchGestured:(UIPinchGestureRecognizer *)gestureRecognizer {
-  CGFloat scale = [gestureRecognizer scale];
-  NSLog(@"pinch - scale = %f", scale);
-  CGFloat newScale = self.scale * scale;
-  if(newScale >= self.maxScale) {
-    self.scale = self.maxScale;
-  }
-  else if(newScale <= self.minScale) {
-    self.scale = self.minScale;
+  if(gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+    self.scaleWhenPinchBegan =  self.scale;
   }
   else {
-    self.scale = newScale;
+    if(self.scale == self.maxScale && gestureRecognizer.scale > 1.0) {
+      return;
+    }
+    if(self.scale == self.minScale && gestureRecognizer.scale < 1.0) {
+      return;
+    }
+    float newScale = self.scaleWhenPinchBegan * gestureRecognizer.scale;
+    if(newScale >= self.maxScale) {
+      self.scale = self.maxScale;
+    }
+    else if(newScale <= self.minScale) {
+      self.scale = self.minScale;
+    }
+    else {
+      self.scale = newScale;
+    }
+    /*
+    self.gridView.superview.transform = CGAffineTransformMakeScale(self.scale, self.scale);
+    
+    CGAffineTransformMakeScale(2.0, 0.5);
+    
+    self.gridView.transform  = CGAffineTransformMakeTranslation(
+                         self.gridView.frame.origin.x + self.gridView.frame.origin.x * self.scale,
+                         self.gridView.frame.origin.y + self.gridView.frame.origin.y * self.scale);
+    */
+    self.gridView.layout.scale = self.scale;
+    self.rowHeaderGridView.layout.scale = self.scale;
+    self.columnHeaderGridView.layout.scale = self.scale;
+    self.gridView.frame = [self gridViewFrame];
+    self.rowHeaderGridView.frame = [self rowHeaderViewFrame];
+    self.columnHeaderGridView.frame = [self columnHeaderViewFrame];
+    [self.view setNeedsDisplay];
   }
-  self.gridView.layout.scale = self.scale;
-  self.rowHeaderGridView.layout.scale = self.scale;
-  self.columnHeaderGridView.layout.scale = self.scale;
-  self.gridView.frame = [self gridViewFrame];
-  self.rowHeaderGridView.frame = [self rowHeaderViewFrame];
-  self.columnHeaderGridView.frame = [self columnHeaderViewFrame];
-  
-  [self.view setNeedsDisplay];
 }
 
 #pragma mark UIScrollViewDelegate
@@ -286,8 +382,13 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
   self.rowHeaderWidth = 50.0f;
   self.cellSize = CGSizeMake(60.0f, 25.0f);
   self.scale = 1.0f;
-  self.maxScale = 1.5f;
-  self.minScale = 0.8f;
+  self.maxScale = 2.0f;
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    self.minScale = 0.45f;
+  }
+  else {
+    self.minScale = 0.33f;
+  }
   self.autosizing = YES;
   self.contentsTop = 0;
 }
@@ -357,6 +458,7 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
   return _contentsTop;
 }
 
+/*
 - (CGRect) viewFrame {
   
   CGRect frame = self.view.frame;
@@ -373,34 +475,29 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
   }
   return frame;
 }
+ */
 
 - (CGRect) contentsFrame {
   
-  CGRect frame = self.view.frame;
-  CGRect screenFrame = [[UIScreen mainScreen] applicationFrame];
+  CGRect frame = self.view.bounds;
   if(self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
      self.interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
-    frame.size.height = screenFrame.size.width;
-    frame.size.width = screenFrame.size.height;
-    frame.origin.y = screenFrame.origin.x;
-    frame.origin.x = screenFrame.origin.y;
   }
   else {
+    CGRect screenFrame = self.view.bounds;
     frame = screenFrame;
   }
-
-  if(self.navigationController.navigationBarHidden == NO) {
-    frame.origin.y += self.navigationController.navigationBar.frame.size.height;
-    frame.size.height -= self.navigationController.navigationBar.frame.size.height;
+  if([self isIOS7]) {
+    if(self.navigationController.toolbarHidden == NO) {
+//      frame.size.height -= self.navigationController.toolbar.frame.size.height;
+    }
   }
-  if(self.navigationController.tabBarController &&
-     self.navigationController.tabBarController.tabBar &&
-     self.navigationController.tabBarController.tabBar.hidden == NO) {
-    frame.size.height -= self.navigationController.tabBarController.tabBar.frame.size.height;
+  else {
+    if(self.navigationController.toolbarHidden == NO) {
+//      frame.size.height -= self.navigationController.toolbar.frame.size.height;
+    }
   }
-  if(self.navigationController.toolbarHidden == NO) {
-    frame.size.height -= self.navigationController.toolbar.frame.size.height;
-  }
+  NSLog(@"frame y, height - %f,%f", frame.origin.y, frame.size.height);
   return frame;
 }
 
@@ -511,14 +608,24 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
   
   _rowHeaderGridView.frame = self.rowHeaderViewFrame;
   _columnHeaderGridView.frame = self.columnHeaderViewFrame;
-  // }
-  if(self.navigationController.toolbarHidden == NO) {
-    CGRect barFrame = self.navigationController.toolbar.frame;
-    CGRect viewFrame =[self viewFrame];
-    barFrame.origin.y = viewFrame.size.height - barFrame.size.height;
-    self.navigationController.toolbar.frame = barFrame;
-  }
-
 }
+
+- (CGRect) viewFrame {
+  return self.view.frame;  // 自動計算値でOK
+}
+
+- (CGFloat)iOSVersion
+{
+  return ([[[UIDevice currentDevice] systemVersion] floatValue]);
+}
+
+
+// iOS7以降であるか
+- (BOOL)isIOS7
+{
+  return [self iOSVersion] >= 7.0f;
+}
+
+
 
 @end

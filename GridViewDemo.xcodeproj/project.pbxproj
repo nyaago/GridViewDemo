@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		720CEC131887ADB500CCBACB /* GridCellInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 720CEC121887ADB500CCBACB /* GridCellInfo.m */; };
 		720D8D2217FDC67800D2D8B3 /* GridCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 720D8D2117FDC67800D2D8B3 /* GridCellLabel.m */; };
 		722E091117FBFD79004AC9FD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 722E091017FBFD79004AC9FD /* UIKit.framework */; };
 		722E091317FBFD79004AC9FD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 722E091217FBFD79004AC9FD /* Foundation.framework */; };
@@ -45,6 +46,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		720CEC101887ADB500CCBACB /* GridCellColorProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridCellColorProvider.h; path = GridView/GridCellColorProvider.h; sourceTree = "<group>"; };
+		720CEC111887ADB500CCBACB /* GridCellInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridCellInfo.h; path = GridView/GridCellInfo.h; sourceTree = "<group>"; };
+		720CEC121887ADB500CCBACB /* GridCellInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridCellInfo.m; path = GridView/GridCellInfo.m; sourceTree = "<group>"; };
 		720D8D2017FDC67800D2D8B3 /* GridCellLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridCellLabel.h; path = GridView/GridCellLabel.h; sourceTree = "<group>"; };
 		720D8D2117FDC67800D2D8B3 /* GridCellLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GridCellLabel.m; path = GridView/GridCellLabel.m; sourceTree = "<group>"; };
 		722E090D17FBFD79004AC9FD /* GridViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GridViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,6 +195,9 @@
 		722E094B17FC0265004AC9FD /* GridView */ = {
 			isa = PBXGroup;
 			children = (
+				720CEC101887ADB500CCBACB /* GridCellColorProvider.h */,
+				720CEC111887ADB500CCBACB /* GridCellInfo.h */,
+				720CEC121887ADB500CCBACB /* GridCellInfo.m */,
 				722E092817FBFD79004AC9FD /* GridViewController.h */,
 				722E092917FBFD79004AC9FD /* GridViewController.m */,
 				722E094C17FC02EE004AC9FD /* GridLayout.h */,
@@ -330,6 +337,7 @@
 				722E095117FC13CD004AC9FD /* GridViewCell.m in Sources */,
 				724A887E17FCF831009D0FA4 /* GridViewLayoutAttribute.m in Sources */,
 				720D8D2217FDC67800D2D8B3 /* GridCellLabel.m in Sources */,
+				720CEC131887ADB500CCBACB /* GridCellInfo.m in Sources */,
 				724A888117FCFCD4009D0FA4 /* GridViewDataSource.m in Sources */,
 				724A888417FD31DC009D0FA4 /* GridViewDelegate.m in Sources */,
 				724A888717FD336B009D0FA4 /* GridDemoDataSource.m in Sources */,

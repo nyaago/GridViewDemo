@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GridCellLabel.h"
+#import "GridCellColorProvider.h"
 
 @interface GridViewCell : UICollectionViewCell
 
@@ -45,8 +46,12 @@
  */
 @property (nonatomic, assign) CGFloat leftPadding;
 
+
 @property (nonatomic, assign) CGFloat borderWidth;
 @property (nonatomic, weak) UIColor *borderColor;
 @property (nonatomic, assign) UIColor *selectedBackgroundColor;
+@property (nonatomic, assign) UIColor *activedBackgroundColor;
+@property (nonatomic, weak) NSObject<GridCellColorProvider> *colorProvider;
+@property (nonatomic) BOOL actived;
 
 @end

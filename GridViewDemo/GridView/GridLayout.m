@@ -33,7 +33,7 @@
     self.numberOfColumns = 10;
     self.contentSize = CGSizeZero;
     self.maxScale = 2.5f;
-    self.minScale = 0.8f;
+    self.minScale = 0.2f;
     self.scale = 1.0f;
     
   }

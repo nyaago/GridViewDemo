@@ -20,6 +20,7 @@ const NSString *kGridViewColumnHeaderCellKind = @"GridViewColumnHeaderCell";
   if (self) {
     self.backgroundColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
     self.selectedBackgroundColor = [UIColor grayColor];
+    self.activedBackgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:self.contentLabel];
     self.autoresizesSubviews = YES;
     self.layer.borderColor = [UIColor grayColor].CGColor;
@@ -40,12 +41,6 @@ const NSString *kGridViewColumnHeaderCellKind = @"GridViewColumnHeaderCell";
   frame.origin.y = 0;
   _contentLabel.frame = frame;
   _contentLabel.font = [UIFont systemFontOfSize:frame.size.height * 0.8f];
-  if(self.selected) {
-    _contentLabel.backgroundColor = self.selectedBackgroundColor;
-  }
-  else {
-    _contentLabel.backgroundColor = self.backgroundColor;
-  }
 }
 
 - (void) setSelected:(BOOL)selected {
@@ -54,9 +49,27 @@ const NSString *kGridViewColumnHeaderCellKind = @"GridViewColumnHeaderCell";
     _contentLabel.backgroundColor = self.selectedBackgroundColor;
   }
   else {
-    _contentLabel.backgroundColor = self.backgroundColor;
+    _contentLabel.backgroundColor = [self contentBackgroundColor];
   }
-  
+  if(self.actived) {
+    _contentLabel.backgroundColor = self.activedBackgroundColor;
+  }
+}
+
+- (void) setActived:(BOOL)actived {
+  _actived = actived;
+  if(self.actived) {
+    NSLog(@"%@, %@", _contentLabel.backgroundColor, self.activedBackgroundColor);
+    _contentLabel.backgroundColor = self.activedBackgroundColor;
+  }
+  else {
+    if(self.selected) {
+      _contentLabel.backgroundColor = self.selectedBackgroundColor;
+    }
+    else {
+      _contentLabel.backgroundColor = [self contentBackgroundColor];
+    }
+  }
 }
 
 
@@ -75,9 +88,32 @@ const NSString *kGridViewColumnHeaderCellKind = @"GridViewColumnHeaderCell";
   return _contentLabel;
 }
 
+- (UIColor *)contentBackgroundColor {
+  if(self.actived) {
+    return self.activedBackgroundColor;
+  }
+  if(self.colorProvider) {
+
+    
+    UIColor *color = [self.colorProvider backgroundColorForValue:self.text];
+    if(color) {
+      return color;
+    }
+  }
+  return self.backgroundColor;
+}
 
 - (void) setText:(NSString *)text {
   self.contentLabel.text = text;
+  if(self.selected) {
+    _contentLabel.backgroundColor = self.selectedBackgroundColor;
+  }
+  else {
+    _contentLabel.backgroundColor = [self contentBackgroundColor];
+  }
+  if(self.actived) {
+    _contentLabel.backgroundColor = self.activedBackgroundColor;
+  }
 }
 
 - (NSString *)text {

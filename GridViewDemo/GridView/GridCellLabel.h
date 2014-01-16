@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
 /*!
  GridView用のUILabel拡張
  @class GridCellLabel
@@ -23,5 +22,6 @@
  左側のPadding
  */
 @property (nonatomic, assign) CGFloat leftPadding;
+
 
 @end

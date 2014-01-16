@@ -18,6 +18,8 @@ NSObject<GridDataSource> *_source;
 
 //- (id)initWithFrame:(CGRect)frame;
 
+@property (nonatomic, strong)   GridViewDataSource *viewDataSource;
+
 @property (nonatomic) NSObject<GridDataSource> *source;
 @property (nonatomic) CGFloat minScale;
 @property (nonatomic) CGFloat maxScale;
@@ -28,7 +30,22 @@ NSObject<GridDataSource> *_source;
 @property (nonatomic) BOOL autosizing;
 @property (nonatomic) CGFloat contentsTop;
 
+@property (nonatomic, strong) GridView *gridView;
+
 - (void) clearSelection;
+
+// @deprecated
+- (BOOL) isSelectedWithRow:(NSInteger)row column:(NSInteger)column;
+
+/**
+ * @return 選択セルの行列情報(GridCellInfo)の配列
+ */
+- (NSArray *) selectedGridCellInfos;
+
+/**
+ */
+- (BOOL) isSelectedWithRow:(NSInteger)row column:(NSInteger)column
+             gridCellInfos:(NSArray *) gridCellInfos;
 
 
 @end

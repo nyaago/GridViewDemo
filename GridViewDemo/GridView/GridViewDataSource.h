@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GridCellColorProvider.h"
 
 /*!
  Gridに表示するデータを提供するプロトコル
@@ -52,6 +53,14 @@
  */
 - (NSString *) columnTitleAt:(NSInteger)column;
 
+@optional
+
+- (BOOL) activeAtRow:(NSInteger)row atColumn:(NSInteger)column;
+- (void) clearActive;
+- (void) setActiveAtRow:(NSInteger)row atColumn:(NSInteger)column;
+- (NSInteger) activeCellRow;
+- (NSInteger) activeCellColumn;
+
 @end
 
 /*!
@@ -60,6 +69,8 @@
 @interface GridViewDataSource : NSObject <UICollectionViewDataSource>
 
 @property (nonatomic, strong) NSObject<GridDataSource> *source;
+@property (nonatomic, weak) NSObject<GridCellColorProvider> *colorProvider;
+
 
 @end
 
@@ -78,5 +89,6 @@
 @interface GridColumnHeaderDataSource : NSString <UICollectionViewDataSource>
 
 @property (nonatomic, strong) NSObject<GridDataSource> *source;
+
 
 @end
